@@ -29,7 +29,7 @@ public class OrtFlix {
 		} else if (!servicioOk) {
 			resultado = ResultadoVerPelicula.CONTENIDO_NO_DISPONIBLE;
 		} else {
-			//agregar al historial
+			cliente.agregarPeliculaAlHistorial(pelicula);
 		}
 
 		return resultado;

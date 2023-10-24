@@ -11,18 +11,22 @@ debe (si no debe estará en cero, si pagó de más será negativo).*/
 	private String nombre;
 	private double saldo;
 	private Servicio servicio;
-	private ArrayList<Pelicula> historialPeliculas;
+	private HistorialPeliculas historial;
 	
 	public Cliente(String dni, String nombre, Servicio servicio) {
 		this.setDni(dni);
 		this.setNombre(nombre);
 		this.setServicio(servicio);
 		this.setSaldo(0);
-		this.historialPeliculas = new ArrayList<>();
+		this.historial = new HistorialPeliculas();
 	}
 	
 	public boolean esDeudor() {
 		return this.getSaldo()<0;
+	}
+	
+	public void agregarPeliculaAlHistorial(Pelicula pelicula) {
+		historial.agregarPeliculaAHistorial(pelicula);
 	}
 	
 	public String getDni() {
