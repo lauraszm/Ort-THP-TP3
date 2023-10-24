@@ -33,8 +33,7 @@ public class Test {
 		
 		System.out.println("remover prop3 de barrio2");
 		System.out.println(barrio2.removerPropiedad(propiedad3));
-		//System.out.println("propiedades sin prop3 en barrio2");
-		//inmobiliaria.mostrarPropiedades();
+
 		System.out.println("mostrar barrio max prop");
 		inmobiliaria.mostrarBarrioMaxProp();
 		

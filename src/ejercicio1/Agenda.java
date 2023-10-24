@@ -115,8 +115,10 @@ public class Agenda {
 	  * Método público eliminarTodosElementosAMano() que no recibe parámetros y
 		elimina todos los elementos de la lista (sin utilizar el método clear)*/
 	 public void eliminarTodosElementosAMano() {
-		 for (Persona pers: personas) {
-			System.out.println(personas.remove(pers));
+		 int index = personas.size();
+		 while(personas.size() > 0) {			 
+			personas.remove(index-1);
+			index--;
 		 }
 	 }
 }
