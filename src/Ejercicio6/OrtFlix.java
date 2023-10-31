@@ -16,22 +16,25 @@ public class OrtFlix {
 	public ResultadoVerPelicula verPelicula(String dni, String titulo) {
 		ResultadoVerPelicula resultado = ResultadoVerPelicula.OK;
 		Cliente cliente = this.buscarClientePorDni(dni);
-		Pelicula pelicula = this.buscarPeliculaPorTitulo(titulo);
-		boolean esDeudor = cliente.esDeudor();
-		boolean servicioOk = this.servicioCorrecto(pelicula, cliente);
-		
-		if (cliente == null) {
-			resultado = ResultadoVerPelicula.CLIENTE_INEXISTENTE;
-		} else if (pelicula ==  null) {
-			resultado = ResultadoVerPelicula.CONTENIDO_INEXISTENTE;
-		} else if (esDeudor) {
-			resultado = ResultadoVerPelicula.CLIENTE_DEUDOR;
-		} else if (!servicioOk) {
-			resultado = ResultadoVerPelicula.CONTENIDO_NO_DISPONIBLE;
+		if (cliente != null) {			
+			Pelicula pelicula = this.buscarPeliculaPorTitulo(titulo);
+			if (pelicula != null) {
+				boolean esDeudor = cliente.esDeudor();
+				if (!esDeudor) {
+					if (cliente.getServicio().equals(Servicio.PREMIUM) || pelicula.getServicio().equals(Servicio.STANDARD)) {
+						resultado = ResultadoVerPelicula.OK;
+					} else {
+						resultado = ResultadoVerPelicula.CONTENIDO_NO_DISPONIBLE;
+					}
+				} else {
+					resultado = ResultadoVerPelicula.CLIENTE_DEUDOR;
+				}
+			} else {				
+				resultado = ResultadoVerPelicula.CONTENIDO_INEXISTENTE;
+			}
 		} else {
-			cliente.agregarPeliculaAlHistorial(pelicula);
+			resultado = ResultadoVerPelicula.CLIENTE_INEXISTENTE;			
 		}
-
 		return resultado;
 	}
 	
@@ -94,18 +97,7 @@ public class OrtFlix {
 		return peliculaBuscada;
 	}
 	
-	private boolean servicioCorrecto(Pelicula pelicula, Cliente cliente) {
-		boolean servicioOk = false;
-		
-		if (pelicula.getServicio().equals(cliente.getServicio())) {
-			servicioOk = true;
-		}
-		
-		return servicioOk;
-		
-		//return pelicula.getServicio().equals(cliente.getServicio())
-
-	}
+	
 	
 	/*
 	 * Desarrollá la explotación del método darDeBaja(...). Este método recibe un DNI y
